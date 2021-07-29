@@ -1,0 +1,68 @@
+.cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 86%;
+    margin: 104px auto;
+}
+
+.buy-icon {
+    width: 75px;
+    height: 85px;
+    position: absolute;
+    margin-left: 135px;
+    margin-top: 308px;
+    opacity: 0;
+    transition: .7s;
+}
+
+.card {
+    width: 386px;
+    height: 444px;
+    margin-bottom: 103px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    transition: .7s;
+
+    &:hover {
+        box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+        cursor: pointer;
+    }
+
+    &:hover > .buy-icon {
+        opacity: 1;
+    }
+}
+
+.item-image {
+    width: 354px;
+    height: 330px;
+    margin-top: 16px;
+}
+
+.card-inactive {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.out-of-stock {
+    color: #8D8F9A;
+    font-size: 24px;
+    text-transform: uppercase;
+    position: absolute;
+    margin-left: 5%;
+    margin-top: 11.5%;
+}
+
+.item-info {
+    width: 92%;
+    font-weight: 300;
+    font-size: 18px;
+    margin-top: 13px;
+    line-height: 76%;
+
+    .price {
+        font-weight: 500;
+    }
+}
