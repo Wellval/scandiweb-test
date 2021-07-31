@@ -1,13 +1,29 @@
 import React from "react";
-import { ProductCard } from "./ProductCard";
+import { connect } from "react-redux";
 
-export class CategoryPage extends React.Component {
+import { ProductCard } from "./ProductCard";
+import { requestCategory } from '../../redux/actions/categories';
+
+class CategoryPage extends React.Component {
+
     render() {
-        return <main>
-            <h2>Category name</h2>
-            <div className="cards-wrapper">
-                <ProductCard />
-            </div>
-        </main>
+        return (
+            <main>
+                <h2>
+                </h2>
+                <div className="cards-wrapper">
+                    <ProductCard />
+                </div>
+            </main>
+        );
     }
 }
+
+const mapStateToProps = state => {
+    return { ...state.category };
+};
+
+export default connect(
+    mapStateToProps,
+    { requestCategory }
+)(CategoryPage);
