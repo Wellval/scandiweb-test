@@ -1,18 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { consumerType } from '../../constants';
 
 export class Navbar extends React.Component {
+    clickOnCategory = category => {
+        this.props.selectCategory(category);
+    }
+
     render() {
 
         return (
             <nav>
                 <ul className="nav-list">
-                    {consumerType.map(x =>
+                    {this.props.categories.map(x =>
                         <li key={x}>
                             <NavLink
-                                to={"/clothes/" + x}
-                                className={this.props.pathname === "/clothes/" + x ? "active" : null}
+                                to={x}
+                                className={x === this.props.selectedCategory ? "active" : ''}
+                                onClick={() => this.clickOnCategory(x)}
                             >
                                 {x}
                             </NavLink>

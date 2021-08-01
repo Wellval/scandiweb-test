@@ -10,29 +10,6 @@ export class ProductCard extends React.Component {
     };
   }
 
-  /*componentDidMount() {
-    client
-      .query({
-        query: gql`
-          query GetProds {
-            category {
-              products {
-                name
-                id
-                gallery
-              }
-            }
-          }
-        `,
-      })
-      .then((result) =>
-        this.setState((prevState) => ({
-          name: result.data.category.products.map((prod) => prod.name),
-          gallery: result.data.category.products.map((prod) => prod.gallery),
-        }))
-      );
-  }*/
-
   render() {
     return (
       <div>

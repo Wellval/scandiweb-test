@@ -7,7 +7,7 @@ export const requestCurrencies = () => async dispatch =>  {
     try {
         const result = await client.query({
             query: gql`
-                query GetProds {
+                query getCurrencies {
                     currencies
                 }
             `,
