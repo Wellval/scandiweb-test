@@ -1,24 +1,23 @@
 import React from "react";
+import { currenciesSymbols } from '../../constants';
 
 export class ProductCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      names: [],
-      gallery: [],
-      category: "",
-    };
-  }
+    getSymbolForCurrency = currency => currenciesSymbols[currency] || '$';
 
-  render() {
-    return (
-      <div>
-        <img alt="" className="buy-icon" src="./buy-icon.svg"></img>
-        <div className="item-info">
-          <p>Apollo Running Short</p>
-          <p className="price">$50.00</p>
-        </div>
-      </div>
-    );
-  }
+    render() {
+        return (
+            this.props.products
+                .map(x => x
+                    .map(product => product.category === this.props.selectedCategory
+                        && <div key={product.id} className="card">
+                            <img alt="" className="buy-icon" src="./buy-icon.svg"></img>
+                            <img alt={product.brand + '' + product.name} className="item-image" src={product.gallery[0]}></img>
+                            <div className="item-info">
+                                <p>{product.brand} {product.name}</p>
+                                <p className="price">{this.getSymbolForCurrency(this.props.selectedCurrency)}
+                                {product.prices.map(x => x.currency === this.props.selectedCurrency && x.amount)}</p>
+                            </div>
+                        </div>))
+        );
+    }
 }

@@ -8,11 +8,14 @@ import {
 import CategoryPage from "./components/category/CategoryPage";
 import { connect } from "react-redux";
 import { requestCategories, selectCategory } from "./redux/actions/categories";
+import { requestProducts } from "./redux/actions/products";
 import React from "react";
 
 export class App extends React.Component {
     componentDidMount() {
         this.props.requestCategories();
+        this.props.requestProducts();
+        console.log(this.props)
     }
 
     render() {
@@ -27,7 +30,7 @@ export class App extends React.Component {
                     {this.props.categories.length > 0 && <React.Fragment>
                         <Route path='/:category' render={
                             props => this.props.categories.includes(props.match.params.category) ? 
-                                <CategoryPage selectedCategory={props.match.params.category} /> :
+                                <CategoryPage selectedCurrency={this.props.selectedCurrency} selectedCategory={props.match.params.category} products={this.props.products} /> :
                                 <Redirect to={"/" + this.props.categories[0]} />
                         } />
                         <Route exact path='/'>
@@ -42,10 +45,10 @@ export class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { ...state.categories };
+    return { ...state.categories, ...state.products, ...state.currencies, ...state.prices };
 };
 
 export default connect(
     mapStateToProps,
-    { requestCategories, selectCategory }
+    { requestCategories, selectCategory, requestProducts }
 )(App);

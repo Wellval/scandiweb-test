@@ -1,8 +1,8 @@
 .cards-wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    width: 86%;
+    // justify-content: space-between;
+    width: 90%;
     margin: 104px auto;
 }
 
@@ -24,6 +24,7 @@
     display: flex;
     flex-direction: column;
     transition: .7s;
+    margin-left: 40px;
 
     &:hover {
         box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
