@@ -1,7 +1,6 @@
 .cards-wrapper {
     display: flex;
     flex-wrap: wrap;
-    // justify-content: space-between;
     width: 90%;
     margin: 104px auto;
 }
@@ -56,14 +55,24 @@
     margin-top: 11.5%;
 }
 
-.item-info {
+.item-info, .item-info > a {
     width: 92%;
     font-weight: 300;
     font-size: 18px;
     margin-top: 13px;
     line-height: 76%;
+    text-decoration: none;
+    color: #1D1F22;
+    transition: 0.5s;
 
     .price {
         font-weight: 500;
+    }
+}
+
+.item-info > a > p {
+    transition: 0.5s;
+    &:hover {
+        opacity: 0.6;
     }
 }

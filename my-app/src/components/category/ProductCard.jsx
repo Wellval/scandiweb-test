@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { currenciesSymbols } from '../../constants';
 
 export class ProductCard extends React.Component {
@@ -9,15 +10,19 @@ export class ProductCard extends React.Component {
             this.props.products
                 .map(x => x
                     .map(product => product.category === this.props.selectedCategory
-                        && <div key={product.id} className="card">
+                        &&
+                        <div key={product.id} className="card">
                             <img alt="" className="buy-icon" src="./buy-icon.svg"></img>
                             <img alt={product.brand + '' + product.name} className="item-image" src={product.gallery[0]}></img>
                             <div className="item-info">
-                                <p>{product.brand} {product.name}</p>
+                                <NavLink to={`/${this.props.selectedCategory}/${product.id}`}>
+                                    <p>{product.brand} {product.name}</p>
+                                </NavLink>
+
                                 <p className="price">{this.getSymbolForCurrency(this.props.selectedCurrency)}
-                                {product.prices.map(x => x.currency === this.props.selectedCurrency && x.amount)}</p>
+                                    {product.prices.map(x => x.currency === this.props.selectedCurrency && x.amount)}</p>
                             </div>
-                        </div>))
-        );
+                        </div>
+                    )))
     }
 }

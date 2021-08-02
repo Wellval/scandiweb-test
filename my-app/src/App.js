@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { requestCategories, selectCategory } from "./redux/actions/categories";
 import { requestProducts } from "./redux/actions/products";
 import React from "react";
+import ProductPage from "./components/ProductPage";
 
 export class App extends React.Component {
     componentDidMount() {
@@ -28,9 +29,14 @@ export class App extends React.Component {
                     />
                     <Switch>
                     {this.props.categories.length > 0 && <React.Fragment>
-                        <Route path='/:category' render={
+                        <Route exact path='/:category/:product' render={
+                            props => <ProductPage {...props.match.params} />
+                        } />
+                        <Route exact path='/:category' render={
                             props => this.props.categories.includes(props.match.params.category) ? 
-                                <CategoryPage selectedCurrency={this.props.selectedCurrency} selectedCategory={props.match.params.category} products={this.props.products} /> :
+                                <CategoryPage selectedCurrency={this.props.selectedCurrency}
+                                selectedCategory={props.match.params.category}
+                                products={this.props.products} /> :
                                 <Redirect to={"/" + this.props.categories[0]} />
                         } />
                         <Route exact path='/'>

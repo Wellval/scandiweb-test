@@ -14,7 +14,7 @@ export class Navbar extends React.Component {
                     {this.props.categories.map(x =>
                         <li key={x}>
                             <NavLink
-                                to={x}
+                                to={'/' + x}
                                 className={x === this.props.selectedCategory ? "active" : ''}
                                 onClick={() => this.clickOnCategory(x)}
                             >
