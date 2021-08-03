@@ -2,12 +2,9 @@ import React from "react";
 import { Cart } from "./Cart";
 import CurrenciesDropdown from "./CurrenciesDropdown";
 import { Navbar } from "./Navbar";
+import { NavLink } from "react-router-dom";
 
 export class Header extends React.Component {
-    constructor() {
-        super();
-    }
-
     render() {
         return (
             <header>
@@ -15,7 +12,10 @@ export class Header extends React.Component {
                     selectedCategory={this.props.selectedCategory}
                     selectCategory={this.props.selectCategory}
                 />
-                <img alt="" className="a-logo" src="../../a-logo.png"></img>
+                <NavLink
+                    to={"/" + this.props.selectedCategory}>
+                    <img alt="" className="a-logo" src="../../a-logo.png" ></img>
+                </NavLink>
                 <div className="cart-dropdown">
                     <CurrenciesDropdown />
                     <Cart />

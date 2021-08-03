@@ -1,0 +1,48 @@
+.wrapper {
+    display: flex;
+}
+
+.product-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-image {
+    width: 38rem;
+    height: 32rem;
+    margin-left: 3rem;
+}
+
+.side-images {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+}
+
+.side-image {
+    width: 79px;
+    height: 80px;
+    margin-bottom: 40px;
+}
+
+.product-info {
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 27px;
+    margin-left: 6rem;
+}
+
+@media (max-width: 600px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .side-images {
+        flex-direction: row;
+        margin: 0;
+    }
+
+    .side-image {
+        margin-left: 40px;
+    }
+}

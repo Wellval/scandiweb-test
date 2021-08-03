@@ -11,18 +11,18 @@ import { requestCategories, selectCategory } from "./redux/actions/categories";
 import { requestProducts } from "./redux/actions/products";
 import React from "react";
 import ProductPage from "./components/ProductPage";
+import history from './history';
 
 export class App extends React.Component {
     componentDidMount() {
         this.props.requestCategories();
         this.props.requestProducts();
-        console.log(this.props)
     }
 
     render() {
         return (
             <div className="App">
-                <Router>
+                <Router history={history}>
                     <Header categories={this.props.categories} 
                     selectedCategory={this.props.selectedCategory} 
                     selectCategory={this.props.selectCategory}
@@ -30,7 +30,11 @@ export class App extends React.Component {
                     <Switch>
                     {this.props.categories.length > 0 && <React.Fragment>
                         <Route exact path='/:category/:product' render={
-                            props => <ProductPage {...props.match.params} />
+                            props => <ProductPage 
+                            selectedCategory={props.match.params.category}
+                            product={props.match.params.product}
+                            products={this.props.products}
+                            />
                         } />
                         <Route exact path='/:category' render={
                             props => this.props.categories.includes(props.match.params.category) ? 
