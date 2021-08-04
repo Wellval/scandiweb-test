@@ -30,7 +30,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 selectedCurrency: action.payload
             }
-        default: 
+        default:
             return state;
     }
 }

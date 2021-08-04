@@ -2,7 +2,7 @@ import * as actionTypes from "../../constants/actionTypes";
 import { client } from "../../utils/ClientApi";
 import gql from "graphql-tag";
 
-export const requestCurrencies = () => async dispatch =>  {
+export const requestCurrencies = () => async dispatch => {
     dispatch({ type: actionTypes.GET_CURRENCIES_START });
     try {
         const result = await client.query({

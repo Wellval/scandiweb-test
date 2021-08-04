@@ -21,6 +21,16 @@ export const requestProducts = () => async dispatch => {
                                 amount
                                 currency
                             }
+                            attributes {
+                                name
+                                id
+                                type
+                                items {
+                                    displayValue
+                                    value
+                                    id
+                                  }
+                            }
                         }
                     }
                 }
