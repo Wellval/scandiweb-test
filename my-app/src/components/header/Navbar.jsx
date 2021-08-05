@@ -1,7 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { selectCategory } from "../../redux/actions/categories";
 
-export class Navbar extends React.Component {
+class Navbar extends React.Component {
     clickOnCategory = category => {
         this.props.selectCategory(category);
     }
@@ -27,3 +29,16 @@ export class Navbar extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return { 
+        categories: state.categories.list,
+        selectedCategory: state.categories.selected
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    { selectCategory }
+)(Navbar);
+

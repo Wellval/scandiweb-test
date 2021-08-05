@@ -1,8 +1,8 @@
 import * as actionTypes from "../../constants/actionTypes";
 
 const initialState = {
-    selectedCategory: null,
-    categories: [],
+    selected: null,
+    list: [],
     loading: false,
 };
 
@@ -11,8 +11,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_CATEGORIES_SUCCESS:
             return {
                 ...state,
-                categories: action.payload,
-                selectedCategory: action.payload[0].name,
+                list: action.payload,
+                selected: action.payload[0].name,
                 loading: false
             }
         case actionTypes.GET_CATEGORIES_FAILED:
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SELECT_CATEGORY:
             return {
                 ...state,
-                selectedCategory: action.payload
+                selected: action.payload
             }
         default:
             return state;

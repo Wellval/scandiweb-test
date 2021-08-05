@@ -1,7 +1,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 
 const initialState = {
-    products: [],
+    list: [],
     loading: false
 }
 
@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_PRODUCTS_SUCCESS:
             return {
                 ...state,
-                products: action.payload,
+                list: action.payload,
                 loading: false,
             }
         default:

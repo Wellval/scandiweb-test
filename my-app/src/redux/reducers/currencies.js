@@ -3,7 +3,7 @@ import * as actionTypes from "../../constants/actionTypes";
 const initialState = {
     list: [],
     loading: false,
-    selectedCurrency: null
+    selected: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 list: action.payload,
-                selectedCurrency: action.payload[0],
+                selected: action.payload[0],
                 loading: false
             }
         case actionTypes.GET_CURRENCIES_FAILED:
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SELECT_CURRENCY:
             return {
                 ...state,
-                selectedCurrency: action.payload
+                selected: action.payload
             }
         default:
             return state;

@@ -1,4 +1,4 @@
-import { Header } from "./components/header/Header";
+import Header from "./components/header/Header";
 import {
     BrowserRouter as Router,
     Redirect,
@@ -7,42 +7,31 @@ import {
 } from "react-router-dom";
 import CategoryPage from "./components/category/CategoryPage";
 import { connect } from "react-redux";
-import { requestCategories, selectCategory } from "./redux/actions/categories";
-import { requestProducts } from "./redux/actions/products";
+import { requestCategories } from "./redux/actions/categories";
 import React from "react";
 import ProductPage from "./components/ProductPage";
 import history from './history';
 
-export class App extends React.Component {
+class App extends React.Component {
     componentDidMount() {
         this.props.requestCategories();
-        this.props.requestProducts();
     }
 
     render() {
         return (
             <div className="App">
                 <Router history={history}>
-                    <Header categories={this.props.categories}
-                        selectedCategory={this.props.selectedCategory}
-                        selectCategory={this.props.selectCategory}
-                    />
+                    <Header />
                     <Switch>
                         {this.props.categories.length > 0 && <React.Fragment>
                             <Route exact path='/:category/:product' render={
                                 props => <ProductPage
-                                    selectedCategory={props.match.params.category}
+                                    category={props.match.params.category}
                                     product={props.match.params.product}
-                                    products={this.props.products}
-                                    selectedCurrency={this.props.selectedCurrency}
                                 />
                             } />
                             <Route exact path='/:category' render={
-                                props => this.props.categories.includes(props.match.params.category) ?
-                                    <CategoryPage selectedCurrency={this.props.selectedCurrency}
-                                        selectedCategory={props.match.params.category}
-                                        products={this.props.products} /> :
-                                    <Redirect to={"/" + this.props.categories[0]} />
+                                props => <CategoryPage category={props.match.params.category} />
                             } />
                             <Route exact path='/'>
                                 <Redirect to={"/" + this.props.categories[0]} />
@@ -56,10 +45,12 @@ export class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { ...state.categories, ...state.products, ...state.currencies, ...state.prices };
+    return { 
+        categories: state.categories.list
+    };
 };
 
 export default connect(
     mapStateToProps,
-    { requestCategories, selectCategory, requestProducts }
+    { requestCategories }
 )(App);

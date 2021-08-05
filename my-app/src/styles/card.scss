@@ -2,14 +2,15 @@
     display: flex;
     flex-wrap: wrap;
     width: 90%;
-    margin: 104px auto;
+    margin: auto;
+    margin-bottom: 0;
 }
 
 .buy-icon {
     width: 75px;
     height: 85px;
     position: absolute;
-    margin-left: 135px;
+    margin-left: 247px;
     margin-top: 308px;
     opacity: 0;
     transition: .7s;

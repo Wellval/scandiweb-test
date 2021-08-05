@@ -22,19 +22,6 @@ class CurrenciesDropdown extends React.Component {
         }));
     };
 
-    selectItem = (item) => {
-        const { resetThenSet } = this.props;
-        const { title, id, key } = item;
-
-        this.setState(
-            {
-                headerTitle: title[0],
-                isListOpen: false,
-            },
-            () => resetThenSet(id, key)
-        );
-    };
-
     getSymbolForCurrency = currency => currenciesSymbols[currency] || '$';
 
     clickOnCurrency = currency => {
@@ -78,10 +65,13 @@ class CurrenciesDropdown extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { ...state.currencies };
+    return { 
+        selectedCurrency: state.currencies.selected,
+        list: state.currencies.list
+    };
 };
 
 export default connect(
     mapStateToProps,
-    { requestCurrencies, selectCurrency}
+    { requestCurrencies, selectCurrency }
 )(CurrenciesDropdown);

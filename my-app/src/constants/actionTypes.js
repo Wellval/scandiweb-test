@@ -17,4 +17,12 @@ export const GET_PRICES_FAILED = "GET_PRICES_FAILED";
 export const SELECT_CURRENCY = "SELECT_CURRENCY";
 export const SELECT_CATEGORY = "SELECT_CATEGORY";
 
+export const TOGGLE_CART = "TOGGLE_CART";
+
+export const ADD_CART_ITEM = "ADD_CART_ITEM";
+export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
+
+export const SELECT_OPTION = "SELECT_OPTION"
+
+
 
