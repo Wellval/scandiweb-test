@@ -29,6 +29,7 @@
 .product-info {
     .product-description {
         p, h1 {
+            text-transform: none;
             font-weight: normal;
             font-size: 16px;
             color: #1D1F22;
@@ -98,6 +99,12 @@
     background-color: #5ECE7B;
     color: white;
     transition: .7s;
+
+    &-disabled {
+        opacity: 0.7;
+        cursor: default;
+        pointer-events: none;
+    }
 
     &:hover {
         color: white;

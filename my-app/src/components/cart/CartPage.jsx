@@ -1,23 +1,16 @@
 import React from "react";
 import Wrapper from "../Wrapper";
 import { connect } from "react-redux";
-import { addCartItem, removeCartItem } from "../../redux/actions/cart";
+import { addCartItem, removeCartItem, changeCartItemAttribute, toggleCart } from "../../redux/actions/cart";
 import { currenciesSymbols } from "../../constants";
+import { groupItems } from "../../utils/groupItems";
 
 class CartPage extends React.Component {
 
-    countCartItems(itemId) {
-        const counts = {};
-        this.props.cartItems.forEach(function (x) { counts[x.id] = (counts[x.id] || 0) + 1; 
-        });
-        return counts[itemId]
-    }
-
-    getProductsSet() {
-        const itemsSet = new Set(this.props.cartItems.map(item => JSON.stringify(item)))
-        const productsSet = [];
-        itemsSet.forEach(item => productsSet.push(JSON.parse(item)));
-        return productsSet;
+    componentDidMount() {
+        if (this.props.isCartOpen) {
+            this.props.toggleCart();
+        }
     }
 
     setButtonClassName = (attr, id, attribute) => {
@@ -35,20 +28,22 @@ class CartPage extends React.Component {
                 <p className="cart-page-title">cart</p>
 
                 {
-                    this.getProductsSet().map(item =>
-                        <div className="cart-item-container">
-                            <div key={item.id} className="product-info product-info-cart">
+                    groupItems(this.props.cartItems).map(item =>
+                        <div key={item.id} className="cart-item-container">
+                            <div className="product-info product-info-cart">
                                 <h3>{item.brand}</h3>
                                 <p>{item.name}</p>
-                                <p key={Math.random()} className="price">
+                                <p className="price">
                                     {currenciesSymbols[this.props.selectedCurrency] || '$'} {item.prices.find(x => x.currency === this.props.selectedCurrency)?.amount}
                                 </p>
                                 {
-                                    item.attributes.map(attribute => <div className="cart-attributes">
+                                    item.attributes.map(attribute => <div className="cart-attributes" key={attribute.id}>
                                         {
                                             attribute.items.map(attr => <button
+                                                key={attribute.id + attr.value}
                                                 className={this.setButtonClassName(attr, item.attrValues, attribute)}
                                                 style={{ ...attribute.type === "swatch" ? { backgroundColor: attr.value } : "" }}
+                                                onClick={() => this.props.changeCartItemAttribute(item, attribute.id, attr.value)}
                                             >{attribute.type === "swatch" ? "" : attr.value}</button>
                                             )}
                                     </div>)
@@ -59,11 +54,11 @@ class CartPage extends React.Component {
                                 <div className="cart-popup-amount">
                                     <button className="cart-popup-button"
                                         onClick={() => {
-                                            this.props.addCartItem({ ...item, attrValues: item.attrValues });
+                                            this.props.addCartItem({ ...item, count: undefined });
                                         }}>
                                         +
                                     </button>
-                                    <p>{this.countCartItems(item.id)}</p>
+                                    <p>{item.count}</p>
                                     <button className="cart-popup-button"
                                         onClick={() => {
                                             this.props.removeCartItem(item);
@@ -88,10 +83,11 @@ const mapStateToProps = state => {
         selectedCurrency: state.currencies.selected,
         cartItems: state.cart.list,
         products: state.products.list,
+        isCartOpen: state.cart.isOpen
     };
 };
 
 export default connect(
     mapStateToProps,
-    { addCartItem, removeCartItem }
+    { addCartItem, removeCartItem, changeCartItemAttribute, toggleCart }
 )(CartPage);

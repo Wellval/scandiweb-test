@@ -1,5 +1,5 @@
 import React from "react";
-import Cart from "./Cart";
+import Cart from "../cart/Cart";
 import CurrenciesDropdown from "./CurrenciesDropdown";
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";

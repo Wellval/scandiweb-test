@@ -1,8 +1,9 @@
 import React from "react";
 import { currenciesSymbols } from "../../constants";
-import { toggleCart, addCartItem, removeCartItem } from "../../redux/actions/cart";
+import { toggleCart, addCartItem, removeCartItem, changeCartItemAttribute } from "../../redux/actions/cart";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { groupItems } from "../../utils/groupItems";
 
 class Cart extends React.Component {
 
@@ -12,21 +13,7 @@ class Cart extends React.Component {
     }
 
     numberCount() {
-        const count = this.props.cartItems.length;
-        return count;
-    }
-
-    countCartItems(itemId) {
-        const counts = {};
-        this.props.cartItems.forEach(function (x) { counts[x.id] = (counts[x.id] || 0) + 1; });
-        return counts[itemId]
-    }
-
-    getProductsSet() {
-        const itemsSet = new Set(this.props.cartItems.map(item => JSON.stringify(item)))
-        const productsSet = [];
-        itemsSet.forEach(item => productsSet.push(JSON.parse(item)));
-        return productsSet;
+        return this.props.cartItems.length;
     }
 
     sumPrice() {
@@ -38,21 +25,21 @@ class Cart extends React.Component {
         return sum;
     }
 
-    render() { 
+    render() {
         return (
             <div className="cart-dd-wrapper">
-            <div className={this.props.isCartOpen ? "cart-open" : "cart-image-circle-container"}>
-                {this.numberCount() > 0 && <div className="products-number-circle">{this.numberCount()}</div>}
+                <div className={this.props.isCartOpen ? "cart-open" : "cart-image-circle-container"}>
+                    {this.numberCount() > 0 && <div className="products-number-circle">{this.numberCount()}</div>}
                     <img alt="" className="cart" src="../../empty-cart.svg" onClick={() => {
                         this.props.toggleCart();
                     }}></img>
-            </div>
-            
+                </div>
+
                 {(this.props.isCartOpen) && <div role="list" className="cart-list">
                     <div className="cart-wrapper">
                         <p className="cart-title"><b>My bag</b>, {this.stringCount()}</p>
                         {
-                            this.getProductsSet().map(cartItem => <div className="cart-popup-item">
+                            groupItems(this.props.cartItems).map((cartItem, index) => <div key={index} className="cart-popup-item">
                                 <div className="cart-popup-info">
                                     <p>{cartItem.brand}</p>
                                     <p>{cartItem.name}</p>
@@ -60,14 +47,16 @@ class Cart extends React.Component {
                                         <b>{cartItem.prices.find(price => price.currency === this.props.selectedCurrency).amount}</b></p>
                                     <div className="cart-popup-attributes">
                                         {
-                                            cartItem.attributes.map(attribute => <div>
+                                            cartItem.attributes.map(attribute => <div key={attribute.id}>
                                                 {
                                                     attribute.items.map(attr => <button
-                                                        className={Object.values(cartItem.attrValues).includes(attr.value) ? 'attribute-text-active-cart' : 'attribute-button-cart'}
+                                                        key={attribute.id + attr.value}
+                                                        className={cartItem.attrValues[attribute.id] === attr.value ? 'attribute-text-active-cart' : 'attribute-button-cart'}
                                                         style={{
                                                             ...attribute.type === "swatch"
                                                                 ? { backgroundColor: attr.value } : ""
                                                         }}
+                                                        onClick={() => this.props.changeCartItemAttribute(cartItem, attribute.id, attr.value)}
                                                     >{attribute.type === "swatch" ? "" : attr.value}</button>
                                                     )}
                                             </div>)
@@ -78,11 +67,11 @@ class Cart extends React.Component {
                                     <div className="cart-popup-amount">
                                         <button className="cart-popup-button"
                                             onClick={() => {
-                                                this.props.addCartItem({ ...cartItem, attrValues: cartItem.attrValues });
+                                                this.props.addCartItem({ ...cartItem, count: undefined });
                                             }}>
                                             +
                                         </button>
-                                        <p>{this.countCartItems(cartItem.id)}</p>
+                                        <p>{cartItem.count}</p>
                                         <button className="cart-popup-button" onClick={() => {
                                             this.props.removeCartItem(cartItem);
                                         }}>
@@ -122,5 +111,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { toggleCart, addCartItem, removeCartItem }
+    { toggleCart, addCartItem, removeCartItem, changeCartItemAttribute }
 )(Cart);

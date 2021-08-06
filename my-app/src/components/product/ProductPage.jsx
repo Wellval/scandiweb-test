@@ -51,6 +51,15 @@ class ProductPage extends React.Component {
         });
     }
 
+    isAllSelected() {
+        for (let attr of this.state.product.attributes) {
+            if (this.state.attributes[attr.id] === undefined) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     render() {
 
         const product = this.state.product;
@@ -93,8 +102,8 @@ class ProductPage extends React.Component {
                             <p key={Math.random()} className="price">
                                 {currenciesSymbols[this.props.selectedCurrency] || '$'} {product.prices.find(x => x.currency === this.props.selectedCurrency)?.amount}</p>
                             <button
-                                onClick={() => this.props.addCartItem({ ...product, attrValues: this.state.attributes })}
-                                className="add-to-cart-button">
+                                onClick={() => this.isAllSelected() && this.props.addCartItem({ ...product, attrValues: this.state.attributes })}
+                                className={'add-to-cart-button ' + (this.isAllSelected() ? '' : 'add-to-cart-button-disabled')}>
                                 Add to cart
                             </button>
                             <div className="product-description" dangerouslySetInnerHTML={{ __html: product.description }}></div>

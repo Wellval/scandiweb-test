@@ -1,4 +1,5 @@
 import * as actionTypes from "../../constants/actionTypes";
+import { getEqualIndex } from "../../utils/groupItems";
 
 const initialState = {
     isOpen: false,
@@ -17,10 +18,30 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 list: [...state.list, action.payload],
             }
-        case actionTypes.REMOVE_CART_ITEM:
+        case actionTypes.CHANGE_CART_ITEM_ATTRIBUTE:
             return {
                 ...state,
-                list: state.list.filter(x => x.id !== action.payload.id),
+                list: state.list.map(item => {
+                    const { name, value } = action.payload.attribute;
+                    if (getEqualIndex([action.payload.item], item) !== -1) {
+                        return {
+                            ...item, 
+                            attrValues: {
+                                ...item.attrValues,
+                                [name]: value
+                            }
+                        };
+                    }
+                    return item;
+                })
+            }
+        case actionTypes.REMOVE_CART_ITEM:
+            const removeIndex = getEqualIndex(state.list, action.payload);
+            const newArray = [...state.list];
+            newArray.splice(removeIndex, 1)
+            return {
+                ...state,
+                list: newArray
             }
         default:
             return state;
