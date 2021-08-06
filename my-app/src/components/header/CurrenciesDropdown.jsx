@@ -3,6 +3,7 @@ import FontAwesome from "react-fontawesome";
 import { connect } from "react-redux";
 import { selectCurrency, requestCurrencies } from '../../redux/actions/currencies';
 import { currenciesSymbols } from '../../constants';
+import { toggleCart } from "../../redux/actions/cart"
 
 class CurrenciesDropdown extends React.Component {
     constructor(props) {
@@ -35,7 +36,10 @@ class CurrenciesDropdown extends React.Component {
 
         return (
             <div className="dd-wrapper">
-                <button type="button" className="dd-header" onClick={this.toggleList}>
+                <button type="button" className="dd-header" onClick={() => {
+                    this.toggleList();
+                    if (this.props.isCartOpen === true) this.props.toggleCart();
+                }}>
                     <div
                         className={isListOpen ? "dd-header-title open" : "dd-header-title"}
                     >
@@ -65,7 +69,8 @@ class CurrenciesDropdown extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { 
+    return {
+        isCartOpen: state.cart.isOpen,
         selectedCurrency: state.currencies.selected,
         list: state.currencies.list
     };
@@ -73,5 +78,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { requestCurrencies, selectCurrency }
+    { requestCurrencies, selectCurrency, toggleCart }
 )(CurrenciesDropdown);

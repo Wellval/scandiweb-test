@@ -3,6 +3,8 @@ import ProductCard from "./ProductCard";
 import { requestProducts } from "../../redux/actions/products";
 import { selectCategory } from "../../redux/actions/categories";
 import Wrapper from "../Wrapper";
+import { toggleCart } from "../../redux/actions/cart";
+
 
 import { connect } from "react-redux";
 
@@ -27,7 +29,6 @@ class CategoryPage extends React.Component {
     }
 
     render() {
-
         if (!this.props.selectedCategory || !this.props.products) {
             return null;
         }
@@ -46,7 +47,7 @@ class CategoryPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { 
+    return {
         categories: state.categories.list,
         selectedCategory: state.categories.selected,
         isCartOpen: state.cart.isOpen,
@@ -57,6 +58,6 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { requestProducts, selectCategory }
+    { requestProducts, selectCategory, toggleCart }
 )(CategoryPage);
 

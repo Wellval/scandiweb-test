@@ -1,6 +1,6 @@
 import React from "react";
 import { currenciesSymbols } from "../../constants";
-import { toggleCart } from "../../redux/actions/cart";
+import { toggleCart, addCartItem, removeCartItem } from "../../redux/actions/cart";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -9,6 +9,12 @@ class Cart extends React.Component {
     stringCount() {
         const count = this.props.cartItems.length;
         return `${count} item${count !== 1 ? 's' : ''}`;
+    }
+
+    countCartItems(itemId) {
+        const counts = {};
+        this.props.cartItems.forEach(function (x) { counts[x.id] = (counts[x.id] || 0) + 1; });
+        return counts[itemId]
     }
 
     sumPrice() {
@@ -42,7 +48,10 @@ class Cart extends React.Component {
                                                 {
                                                     attribute.items.map(attr => <button
                                                         className={Object.values(cartItem.attrValues).includes(attr.value) ? 'attribute-text-active-cart' : 'attribute-button-cart'}
-                                                        style={{ ...attribute.type === "swatch" ? { backgroundColor: attr.value } : "" }}
+                                                        style={{
+                                                            ...attribute.type === "swatch"
+                                                                ? { backgroundColor: attr.value } : ""
+                                                        }}
                                                     >{attribute.type === "swatch" ? "" : attr.value}</button>
                                                     )}
                                             </div>)
@@ -51,11 +60,16 @@ class Cart extends React.Component {
                                 </div>
                                 <div className="cart-popup-image">
                                     <div className="cart-popup-amount">
-                                        <button className="cart-popup-button">
+                                        <button className="cart-popup-button"
+                                            onClick={() => {
+                                                this.props.addCartItem({ ...cartItem, attrValues: cartItem.attrValues });
+                                            }}>
                                             +
                                         </button>
-                                        <p>1</p>
-                                        <button className="cart-popup-button">
+                                        <p>{this.countCartItems(cartItem.id)}</p>
+                                        <button className="cart-popup-button" onClick={() => {
+                                            this.props.removeCartItem(cartItem);
+                                        }}>
                                             -
                                         </button>
                                     </div>
@@ -68,8 +82,8 @@ class Cart extends React.Component {
                         }
                         <p className="cart-popup-total">Total: <b>{currenciesSymbols[this.props.selectedCurrency] || '$'}{this.sumPrice().toFixed(2)}</b></p>
                         <div className="cart-buttons">
-                            <NavLink to={`/cart`}>
-                                <button>view bag</button>
+                            <NavLink to={'/cart'}>
+                                <button onClick={() => { this.props.toggleCart() }}>view bag</button>
                             </NavLink>
                             <button className="cart-popup-green-button">check out</button>
                         </div>
@@ -92,5 +106,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { toggleCart }
+    { toggleCart, addCartItem, removeCartItem }
 )(Cart);

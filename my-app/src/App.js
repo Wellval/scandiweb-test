@@ -10,7 +10,8 @@ import { connect } from "react-redux";
 import { requestCategories } from "./redux/actions/categories";
 import React from "react";
 import ProductPage from "./components/product/ProductPage";
-import { CartPage } from "./components/cart/CartPage";
+import CartPage from "./components/cart/CartPage";
+import { toggleCart } from "./redux/actions/cart"
 
 class App extends React.Component {
     componentDidMount() {
@@ -23,7 +24,10 @@ class App extends React.Component {
                 <Router>
                     <Header />
                     <Switch>
-                        {this.props.categories.length > 0 && <React.Fragment>
+                            <Route exact path='/cart' render={
+                                props => <CartPage />
+                            }>
+                            </Route>
                             <Route exact path='/:category/:product' render={
                                 props => <ProductPage
                                     category={props.match.params.category}
@@ -33,13 +37,9 @@ class App extends React.Component {
                             <Route exact path='/:category' render={
                                 props => <CategoryPage category={props.match.params.category} />
                             } />
-                            <Route exact path='/cart' render={
-                                props => <CartPage />
-                            }/>
-                            <Route exact path='/'>
+                            {this.props.categories.length > 0 && <Route exact path='/'>
                                 <Redirect to={"/" + this.props.categories[0]} />
-                            </Route>
-                        </React.Fragment>}
+                            </Route>}
                     </Switch>
                 </Router>
             </div>
@@ -55,5 +55,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { requestCategories }
+    { requestCategories, toggleCart }
 )(App);

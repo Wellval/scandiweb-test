@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectCategory } from "../../redux/actions/categories";
+import { toggleCart } from "../../redux/actions/cart"
 
 class Navbar extends React.Component {
     clickOnCategory = category => {
@@ -18,7 +19,10 @@ class Navbar extends React.Component {
                             <NavLink
                                 to={'/' + x}
                                 className={x === this.props.selectedCategory ? "active" : ''}
-                                onClick={() => this.clickOnCategory(x)}
+                                onClick={() => {
+                                    this.clickOnCategory(x);
+                                    if (this.props.isCartOpen === true) this.props.toggleCart()
+                                }}
                             >
                                 {x}
                             </NavLink>
@@ -31,7 +35,8 @@ class Navbar extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { 
+    return {
+        isCartOpen: state.cart.isOpen,
         categories: state.categories.list,
         selectedCategory: state.categories.selected
     };
@@ -39,6 +44,6 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { selectCategory }
+    { selectCategory, toggleCart }
 )(Navbar);
 
