@@ -11,10 +11,22 @@ class Cart extends React.Component {
         return `${count} item${count !== 1 ? 's' : ''}`;
     }
 
+    numberCount() {
+        const count = this.props.cartItems.length;
+        return count;
+    }
+
     countCartItems(itemId) {
         const counts = {};
         this.props.cartItems.forEach(function (x) { counts[x.id] = (counts[x.id] || 0) + 1; });
         return counts[itemId]
+    }
+
+    getProductsSet() {
+        const itemsSet = new Set(this.props.cartItems.map(item => JSON.stringify(item)))
+        const productsSet = [];
+        itemsSet.forEach(item => productsSet.push(JSON.parse(item)));
+        return productsSet;
     }
 
     sumPrice() {
@@ -26,17 +38,21 @@ class Cart extends React.Component {
         return sum;
     }
 
-    render() {
+    render() { 
         return (
             <div className="cart-dd-wrapper">
-                <img alt="" className={this.props.isCartOpen ? "cart-open" : "cart"} src="../../empty-cart.svg" onClick={() => {
-                    this.props.toggleCart();
-                }}></img>
+            <div className={this.props.isCartOpen ? "cart-open" : "cart-image-circle-container"}>
+                {this.numberCount() > 0 && <div className="products-number-circle">{this.numberCount()}</div>}
+                    <img alt="" className="cart" src="../../empty-cart.svg" onClick={() => {
+                        this.props.toggleCart();
+                    }}></img>
+            </div>
+            
                 {(this.props.isCartOpen) && <div role="list" className="cart-list">
                     <div className="cart-wrapper">
                         <p className="cart-title"><b>My bag</b>, {this.stringCount()}</p>
                         {
-                            this.props.cartItems.map(cartItem => <div className="cart-popup-item">
+                            this.getProductsSet().map(cartItem => <div className="cart-popup-item">
                                 <div className="cart-popup-info">
                                     <p>{cartItem.brand}</p>
                                     <p>{cartItem.name}</p>

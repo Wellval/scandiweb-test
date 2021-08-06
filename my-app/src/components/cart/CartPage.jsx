@@ -8,13 +8,21 @@ class CartPage extends React.Component {
 
     countCartItems(itemId) {
         const counts = {};
-        this.props.cartItems.forEach(function (x) { counts[x.id] = (counts[x.id] || 0) + 1; });
+        this.props.cartItems.forEach(function (x) { counts[x.id] = (counts[x.id] || 0) + 1; 
+        });
         return counts[itemId]
     }
 
-    setButtonClassName = (type, attr, id, attribute) => {
+    getProductsSet() {
+        const itemsSet = new Set(this.props.cartItems.map(item => JSON.stringify(item)))
+        const productsSet = [];
+        itemsSet.forEach(item => productsSet.push(JSON.parse(item)));
+        return productsSet;
+    }
+
+    setButtonClassName = (attr, id, attribute) => {
         if (attr.value === id[attribute.id]) {
-            return type === "swatch" ? "attribute-color-active" : "attribute-text-active";
+            return attribute.type === "swatch" ? "attribute-color-active" : "attribute-text-active";
         } else {
             return "attribute-button";
         }
@@ -27,7 +35,7 @@ class CartPage extends React.Component {
                 <p className="cart-page-title">cart</p>
 
                 {
-                    this.props.cartItems.map(item =>
+                    this.getProductsSet().map(item =>
                         <div className="cart-item-container">
                             <div key={item.id} className="product-info product-info-cart">
                                 <h3>{item.brand}</h3>
@@ -39,7 +47,7 @@ class CartPage extends React.Component {
                                     item.attributes.map(attribute => <div className="cart-attributes">
                                         {
                                             attribute.items.map(attr => <button
-                                                className={this.setButtonClassName(attribute.type, attr, item.attrValues, attribute)}
+                                                className={this.setButtonClassName(attr, item.attrValues, attribute)}
                                                 style={{ ...attribute.type === "swatch" ? { backgroundColor: attr.value } : "" }}
                                             >{attribute.type === "swatch" ? "" : attr.value}</button>
                                             )}

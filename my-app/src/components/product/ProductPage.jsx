@@ -97,7 +97,7 @@ class ProductPage extends React.Component {
                                 className="add-to-cart-button">
                                 Add to cart
                             </button>
-                            <p className="product-description" dangerouslySetInnerHTML={{ __html: product.description }}></p>
+                            <div className="product-description" dangerouslySetInnerHTML={{ __html: product.description }}></div>
                         </div>
                     </div>
                 </div>
