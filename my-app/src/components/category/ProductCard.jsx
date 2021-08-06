@@ -7,6 +7,16 @@ import { addCartItem } from "../../redux/actions/cart";
 class ProductCard extends React.Component {
     getSymbolForCurrency = currency => currenciesSymbols[currency] || '$';
 
+    generateCartItem(product) {
+        const cartItem = { ...product, attrValues: {} };
+
+        for (let attr of product.attributes) {
+            cartItem.attrValues[attr.id] = attr.items[0]?.value;
+        }
+
+        return cartItem;
+    }
+
     render() {
 
         const product = this.props.product;
@@ -17,7 +27,7 @@ class ProductCard extends React.Component {
                 <img alt=""
                     className="buy-icon"
                     src="./buy-icon.svg"
-                    onClick={() => this.props.addCartItem(product)}></img>
+                    onClick={() => this.props.addCartItem(this.generateCartItem(product))}></img>
                 <NavLink to={`/${product.category}/${product.id}`}>
                     <div className="item-image-wrapper">
                         <img alt={product.brand + ' ' + product.name} className="item-image" src={product.gallery[0]}></img>
@@ -36,7 +46,7 @@ class ProductCard extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { 
+    return {
         selectedCurrency: state.currencies.selected
     };
 };

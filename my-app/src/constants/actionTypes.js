@@ -22,7 +22,7 @@ export const TOGGLE_CART = "TOGGLE_CART";
 export const ADD_CART_ITEM = "ADD_CART_ITEM";
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 
-export const SELECT_OPTION = "SELECT_OPTION"
+export const ADD_PRODUCT_ATTRIBUTE = "ADD_PRODUCT_ATTRIBUTE"
 
 
 

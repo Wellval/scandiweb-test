@@ -87,40 +87,39 @@
     }
 }
 
-.attributes-wrapper {
-    .attribute-button {
-        width: 63px;
-        height: 45px;
-        color: #292929;        ;
-        border: 1px solid #1D1F22;
-        margin-right: 12px;
-        background-color: white;
-        font-weight: normal;
-        font-size: 16px;
-    }
+.attribute-button {
+    width: 63px;
+    height: 45px;
+    color: #292929;        ;
+    border: 1px solid #1D1F22;
+    margin-right: 12px;
+    background-color: white;
+    font-weight: normal;
+    font-size: 16px;
+}
 
-    .attribute-color-active {
-        width: 63px;
-        height: 45px;
-        color: #292929;        ;
-        border: 1px solid #1D1F22;
-        margin-right: 12px;
-        background-color: white;
-        font-weight: normal;
-        font-size: 16px;
-        transform: scale(1.1);
-    }
 
-    .attribute-text-active {
-        width: 63px;
-        height: 45px;
-        color: white;        ;
-        border: 1px solid #1D1F22;
-        margin-right: 12px;
-        background-color: #1D1F22;
-        font-weight: normal;
-        font-size: 16px;
-    }
+.attribute-color-active {
+    width: 63px;
+    height: 45px;
+    color: #292929;        ;
+    border: 1px solid #1D1F22;
+    margin-right: 12px;
+    background-color: white;
+    font-weight: normal;
+    font-size: 16px;
+    transform: scale(1.1);
+}
+
+.attribute-text-active {
+    width: 63px;
+    height: 45px;
+    color: white;        ;
+    border: 1px solid #1D1F22;
+    margin-right: 12px;
+    background-color: #1D1F22;
+    font-weight: normal;
+    font-size: 16px;
 }
 
 @media (max-width: 1230px) {

@@ -41,3 +41,5 @@ export const requestProducts = (categoryName) => async dispatch => {
         dispatch({ type: actionTypes.GET_PRODUCTS_FAILED });
     }
 }
+
+export const addProductAttribute = productAttribute => dispatch => dispatch({ type: actionTypes.ADD_PRODUCT_ATTRIBUTE, payload: productAttribute });

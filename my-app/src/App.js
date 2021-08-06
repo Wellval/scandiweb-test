@@ -9,8 +9,8 @@ import CategoryPage from "./components/category/CategoryPage";
 import { connect } from "react-redux";
 import { requestCategories } from "./redux/actions/categories";
 import React from "react";
-import ProductPage from "./components/ProductPage";
-import history from './history';
+import ProductPage from "./components/product/ProductPage";
+import { CartPage } from "./components/cart/CartPage";
 
 class App extends React.Component {
     componentDidMount() {
@@ -20,7 +20,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Router history={history}>
+                <Router>
                     <Header />
                     <Switch>
                         {this.props.categories.length > 0 && <React.Fragment>
@@ -33,6 +33,9 @@ class App extends React.Component {
                             <Route exact path='/:category' render={
                                 props => <CategoryPage category={props.match.params.category} />
                             } />
+                            <Route exact path='/cart' render={
+                                props => <CartPage />
+                            }/>
                             <Route exact path='/'>
                                 <Redirect to={"/" + this.props.categories[0]} />
                             </Route>
