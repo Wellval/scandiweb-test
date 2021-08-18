@@ -10,7 +10,6 @@ class Navbar extends React.Component {
     }
 
     render() {
-
         return (
             <nav>
                 <ul className="nav-list">                    
@@ -35,9 +34,8 @@ class Navbar extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        isCartOpen: state.cart.isOpen,
         categories: state.categories.list,
-        selectedCategory: state.categories.selected
+        selectedCategory: state.categories.selected,
     };
 };
 

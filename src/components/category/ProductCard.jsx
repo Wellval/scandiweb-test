@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { currenciesSymbols } from '../../constants';
 import { connect } from "react-redux";
 import { addCartItem } from "../../redux/actions/cart";
-import { selectCategory } from "../../redux/actions/categories";
 
 class ProductCard extends React.Component {
     getSymbolForCurrency = currency => currenciesSymbols[currency] || '$';

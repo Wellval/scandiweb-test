@@ -13,7 +13,7 @@ class ToggleButtons extends React.Component {
 
     render() {
 
-        const { product, attributes, setAttributes } = this.props
+        const { product, attributes, setAttributes } = this.props;
 
         if (product) {
             return (

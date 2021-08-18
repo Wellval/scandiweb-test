@@ -57,8 +57,10 @@ header {
       flex-grow: 0;
       margin: 30px 0px;
       font-weight: 600;
-      cursor: default;
-      pointer-events: none;
+      
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }
