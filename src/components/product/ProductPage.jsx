@@ -104,7 +104,7 @@ class ProductPage extends React.Component {
                                 {currenciesSymbols[this.props.selectedCurrency] || '$'} {product.prices.find(x => x.currency === this.props.selectedCurrency)?.amount}</p>
                             <button
                                 onClick={() => this.isAllSelected() && this.props.addCartItem({ ...product, attrValues: this.state.attributes })}
-                                className={'add-to-cart-button ' + (this.isAllSelected() ? '' : 'add-to-cart-button-disabled')}>
+                                className={'add-to-cart-button ' + (this.isAllSelected() && product.inStock ? '' : 'add-to-cart-button-disabled')}>
                                 Add to cart
                             </button>
                             <div className="product-description" dangerouslySetInnerHTML={{ __html: product.description }}></div>
