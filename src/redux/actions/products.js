@@ -5,10 +5,44 @@ import { client } from '../../utils/ClientApi';
 export const requestProducts = (categoryName) => async dispatch => {
     dispatch({ type: actionTypes.GET_PRODUCTS_START });
     try {
+        if (categoryName !== "all") {
+            const result = await client.query({
+                query: gql`
+                    query getProducts {
+                        category (input: {title: "${categoryName}"}) {
+                            products {
+                                id
+                                name
+                                inStock
+                                gallery
+                                description
+                                category
+                                brand
+                                prices {
+                                    amount
+                                    currency
+                                }
+                                attributes {
+                                    name
+                                    id
+                                    type
+                                    items {
+                                        displayValue
+                                        value
+                                        id
+                                      }
+                                }
+                            }
+                        }
+                    }
+                `
+            });
+            dispatch({ type: actionTypes.GET_PRODUCTS_SUCCESS, payload: result.data.category.products });
+        } else {
         const result = await client.query({
             query: gql`
                 query getProducts {
-                    category(input: { title: "${categoryName}" }) {
+                    category {
                         products {
                             id
                             name
@@ -37,6 +71,8 @@ export const requestProducts = (categoryName) => async dispatch => {
             `
         });
         dispatch({ type: actionTypes.GET_PRODUCTS_SUCCESS, payload: result.data.category.products });
+    }
+        
     } catch (e) {
         dispatch({ type: actionTypes.GET_PRODUCTS_FAILED });
     }

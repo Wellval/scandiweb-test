@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { currenciesSymbols } from '../../constants';
 import { connect } from "react-redux";
 import { addCartItem } from "../../redux/actions/cart";
+import { selectCategory } from "../../redux/actions/categories";
 
 class ProductCard extends React.Component {
     getSymbolForCurrency = currency => currenciesSymbols[currency] || '$';
@@ -28,13 +29,13 @@ class ProductCard extends React.Component {
                     className="buy-icon"
                     src="./buy-icon.svg"
                     onClick={() => this.props.addCartItem(this.generateCartItem(product))}></img>
-                <NavLink to={`/${product.category}/${product.id}`}>
+                <NavLink to={`/${this.props.selectedCategory}/${product.id}`}>
                     <div className="item-image-wrapper">
                         <img alt={product.brand + ' ' + product.name} className="item-image" src={product.gallery[0]}></img>
                     </div>
                 </NavLink>
                 <div className="item-info">
-                    <NavLink to={`/${product.category}/${product.id}`}>
+                    <NavLink to={`/${this.props.selectedCategory}/${product.id}`}>
                         <p>{product.brand} {product.name}</p>
                     </NavLink>
                     <p className="price">{this.getSymbolForCurrency(this.props.selectedCurrency)}
@@ -47,7 +48,8 @@ class ProductCard extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        selectedCurrency: state.currencies.selected
+        selectedCurrency: state.currencies.selected,
+        selectedCategory: state.categories.selected,
     };
 };
 

@@ -73,14 +73,15 @@ class ProductPage extends React.Component {
                 <div className="wrapper">
                     <div className="side-images">
                         {
-                            product.gallery.map(x => <img key={x} alt=""
+                            product.gallery.map(x => <div key={x}
                                 className="side-image"
-                                src={x}
                                 onClick={() => {
                                     this.setState({
                                         mainImage: x
                                     });
-                                }}></img>)
+                                }}>
+                                    <img src={x} alt=""/>
+                                </div>)
                         }
                     </div>
                     <div className="product-wrapper">

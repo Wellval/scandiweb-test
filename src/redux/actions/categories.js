@@ -11,10 +11,13 @@ export const requestCategories = () => async dispatch => {
                     categories {
                         name
                     }
+                    category {
+                        name
+                    }
                 }
             `,
         });
-        dispatch({ type: actionTypes.GET_CATEGORIES_SUCCESS, payload: result.data.categories.map(x => x.name) });
+        dispatch({ type: actionTypes.GET_CATEGORIES_SUCCESS, payload: result.data.categories.map(x => x.name).concat(result.data.category.name) });
     } catch (e) {
         dispatch({ type: actionTypes.GET_CATEGORIES_FAILED });
     }

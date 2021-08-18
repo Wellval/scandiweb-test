@@ -13,7 +13,7 @@ class Navbar extends React.Component {
 
         return (
             <nav>
-                <ul className="nav-list">
+                <ul className="nav-list">                    
                     {this.props.categories.map(x =>
                         <li key={x}>
                             <NavLink
