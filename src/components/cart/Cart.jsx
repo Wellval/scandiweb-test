@@ -66,7 +66,7 @@ class Cart extends React.Component {
                                         <b>{cartItem.prices.find(price => price.currency === this.props.selectedCurrency).amount}</b></p>
                                     <div className="cart-popup-attributes">
                                         {
-                                            cartItem.attributes.map(attribute => <div key={attribute.id}>
+                                            cartItem.attributes.map(attribute => <div class="cart-attributes-block" key={attribute.id}>
                                                 {
                                                     attribute.items.map(attr => <button
                                                         key={attribute.id + attr.value}

@@ -85,7 +85,9 @@ class ProductPage extends React.Component {
                         }
                     </div>
                     <div className="product-wrapper">
-                        <div className="main-image-wrapper"><img src={this.state.mainImage.length > 0
+                        <div className="main-image-wrapper">
+                        {product.inStock ? "" : <p className="out-of-stock">Out of stock</p>}
+                            <img src={this.state.mainImage.length > 0
                             ? this.state.mainImage
                             : product.gallery[0]}
                             alt={product.id}

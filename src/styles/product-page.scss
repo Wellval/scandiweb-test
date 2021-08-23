@@ -12,6 +12,14 @@
     width: 38rem;
     height: 32rem;
     margin-left: 3rem;
+    position: relative;
+
+    .out-of-stock {
+        cursor: default;
+        pointer-events: none;
+        margin-left: 31%;
+        margin-top: 38%;
+    }
 
     img {
         width: 100%;

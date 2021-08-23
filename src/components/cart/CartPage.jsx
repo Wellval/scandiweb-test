@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { addCartItem, removeCartItem, changeCartItemAttribute, toggleCart } from "../../redux/actions/cart";
 import { currenciesSymbols } from "../../constants";
 import { groupItems } from "../../utils/groupItems";
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
 
 class CartPage extends React.Component {
 
@@ -22,7 +24,6 @@ class CartPage extends React.Component {
     }
 
     render() {
-
         return (
             <Wrapper>
                 <p className="cart-page-title">cart</p>
@@ -67,7 +68,12 @@ class CartPage extends React.Component {
                                     </button>
                                 </div>
                                 <div className="img-wrapper">
-                                    <img alt="" src={item.gallery[0]}></img>
+                                    {/* <img className="arrow arrow-left" src="./arrow.svg" alt=""></img>
+                                    <img className="arrow arrow-right" src="./arrow.svg" alt=""></img> */}
+                                    <AwesomeSlider>
+                                        
+                                    {item.gallery.map(img => <div alt="" data-src={img}></div>)}
+                                    </AwesomeSlider>
                                 </div>
                             </div>
                         </div>

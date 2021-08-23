@@ -113,6 +113,29 @@
         width: 105px;
         height: 137px;
         margin-left: 10px;
+        overflow: hidden;
+        display: flex;
+        position: relative;
+
+        .arrow {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            margin-top: 59%;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .arrow-left {
+            right: 4px;
+        }
+
+        .arrow-right {
+            transform: rotate(180deg);
+            right: 4px;
+        }
 
         img {
             width: 100%;
@@ -161,6 +184,11 @@
     }
 }
 
+.cart-attributes-block {
+    max-width: 100%;
+    display: flex;
+}
+
 .attribute-button-cart {
     min-width: 24px;
     height: 24px;
@@ -178,7 +206,8 @@
     height: 24px;
     color: #1D1F22;
     border: 1px solid #1D1F22;
-    margin-right: 12px;
+    margin-right: 8px;
+    margin-bottom: 8px;
     font-weight: normal;
     font-size: 14px;
     background-color: white;
