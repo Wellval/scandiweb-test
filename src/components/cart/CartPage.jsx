@@ -68,12 +68,13 @@ class CartPage extends React.Component {
                                     </button>
                                 </div>
                                 <div className="img-wrapper">
-                                    {/* <img className="arrow arrow-left" src="./arrow.svg" alt=""></img>
-                                    <img className="arrow arrow-right" src="./arrow.svg" alt=""></img> */}
-                                    <AwesomeSlider>
-                                        
-                                    {item.gallery.map(img => <div alt="" data-src={img}></div>)}
-                                    </AwesomeSlider>
+                                    {item.gallery.length > 1
+                                        ? <AwesomeSlider>
+                                            {item.gallery.map(img => <div alt="" data-src={img}></div>)}
+                                        </AwesomeSlider>
+                                        : <div>
+                                            <img alt="" src={item.gallery[0]}></img>}
+                                    </div>}
                                 </div>
                             </div>
                         </div>
