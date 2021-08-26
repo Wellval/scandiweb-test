@@ -17,7 +17,9 @@ class CartPage extends React.Component {
 
     setButtonClassName = (attr, id, attribute) => {
         if (attr.value === id[attribute.id]) {
-            return attribute.type === "swatch" ? "attribute-color-active" : "attribute-text-active";
+            return attribute.type === "swatch" 
+            ? "attribute-color-active" 
+            : "attribute-text-active";
         } else {
             return "attribute-button";
         }
@@ -35,18 +37,27 @@ class CartPage extends React.Component {
                                 <h3>{item.brand}</h3>
                                 <p>{item.name}</p>
                                 <p className="price">
-                                    {currenciesSymbols[this.props.selectedCurrency] || '$'} {item.prices.find(x => x.currency === this.props.selectedCurrency)?.amount}
+                                    {currenciesSymbols[this.props.selectedCurrency] || '$'}
+                                    {item.prices.find(x => x.currency === this.props.selectedCurrency)?.amount}
                                 </p>
                                 {
-                                    item.attributes.map(attribute => <div className="cart-attributes" key={attribute.id}>
-                                        {
-                                            attribute.items.map(attr => <button
-                                                key={attribute.id + attr.value}
-                                                className={this.setButtonClassName(attr, item.attrValues, attribute)}
-                                                style={{ ...attribute.type === "swatch" ? { backgroundColor: attr.value } : "" }}
-                                                onClick={() => this.props.changeCartItemAttribute(item, attribute.id, attr.value)}
-                                            >{attribute.type === "swatch" ? "" : attr.value}</button>
-                                            )}
+                                    item.attributes.map(attribute => 
+                                        <div className="cart-attributes" key={attribute.id}>
+                                            {attribute.items.map(attr => attr.value === "Yes"
+                                                ? <div>{attribute.id}</div>
+                                                : "")}
+                                            <div>
+                                                {attribute.items.map(attr => <button
+                                                    key={attribute.id + attr.value}
+                                                    className={this.setButtonClassName(attr, item.attrValues, attribute)}
+                                                    style={{ ...attribute.type === "swatch" 
+                                                    ? { backgroundColor: attr.value } : "" }}
+                                                    onClick={() => 
+                                                        this.props.changeCartItemAttribute(item, attribute.id, attr.value)
+                                                    }
+                                                >{attribute.type === "swatch" ? "" : attr.value}</button>
+                                                )}
+                                        </div>
                                     </div>)
                                 }
 

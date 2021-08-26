@@ -2,6 +2,10 @@
     margin-top: 0;
 }
 
+.attribute-label-block {
+    display: flex;
+    flex-direction: column;
+}
 
 .cart-open {
     cursor: pointer;
@@ -188,6 +192,7 @@
 .cart-attributes-block {
     max-width: 100%;
     display: flex;
+    flex-direction: column;
 }
 
 .attribute-button-cart {

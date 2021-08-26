@@ -67,17 +67,24 @@ class Cart extends React.Component {
                                     <div className="cart-popup-attributes">
                                         {
                                             cartItem.attributes.map(attribute => <div class="cart-attributes-block" key={attribute.id}>
-                                                {
-                                                    attribute.items.map(attr => <button
-                                                        key={attribute.id + attr.value}
-                                                        className={cartItem.attrValues[attribute.id] === attr.value ? 'attribute-text-active-cart' : 'attribute-button-cart'}
-                                                        style={{
-                                                            ...attribute.type === "swatch"
-                                                                ? { backgroundColor: attr.value } : ""
-                                                        }}
-                                                        onClick={() => this.props.changeCartItemAttribute(cartItem, attribute.id, attr.value)}
-                                                    >{attribute.type === "swatch" ? "" : attr.value}</button>
+                                                {attribute.items.map(attr => attr.value === "Yes"
+                                                    ? <div>{attribute.id}</div>
+                                                    : "")}
+                                                <div>
+                                                    {attribute.items.map(attr =>
+                                                        <button
+                                                            key={attribute.id + attr.value}
+                                                            className={cartItem.attrValues[attribute.id] === attr.value 
+                                                                ? 'attribute-text-active-cart' : 'attribute-button-cart'}
+                                                            style={{
+                                                                ...attribute.type === "swatch"
+                                                                    ? { backgroundColor: attr.value } : ""
+                                                            }}
+                                                            onClick={() => this.props.changeCartItemAttribute(cartItem, attribute.id, attr.value)}
+                                                        >{attribute.type === "swatch" ? "" : attr.value}</button>
+
                                                     )}
+                                                </div>
                                             </div>)
                                         }
                                     </div>
