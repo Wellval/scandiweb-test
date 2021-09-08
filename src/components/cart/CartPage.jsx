@@ -84,7 +84,7 @@ class CartPage extends React.Component {
                                             {item.gallery.map(img => <div alt="" data-src={img}></div>)}
                                         </AwesomeSlider>
                                         : <div>
-                                            <img alt="" src={item.gallery[0]}></img>}
+                                            <img alt="" src={item.gallery[0]}></img>
                                     </div>}
                                 </div>
                             </div>

@@ -5,7 +5,8 @@ class ToggleButtons extends React.Component {
 
     setButtonClassName = (type, value, id) => {
         if (this.props.attributes[id] === value) {
-            return type === "swatch" ? "attribute-color-active" : "attribute-text-active";
+            return type === "swatch" 
+            ? "attribute-color-active" : "attribute-text-active";
         } else {
             return "attribute-button";
         }
@@ -29,7 +30,8 @@ class ToggleButtons extends React.Component {
                                     })}
                                     className={this.setButtonClassName(attribute.type, item.value, attribute.id)}
                                     key={item.id}
-                                    style={{ ...attribute.type === "swatch" ? { backgroundColor: item.value } : "" }}
+                                    style={{ ...attribute.type === "swatch" 
+                                    ? { backgroundColor: item.value } : "" }}
                                 >
                                     {attribute.type === "swatch" ? "" : item.value}
                                 </button>

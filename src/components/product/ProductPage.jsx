@@ -1,6 +1,4 @@
 import React from "react";
-import { currenciesSymbols } from '../../constants';
-import ToggleButtons from "./ToggleButtons";
 import Wrapper from "../Wrapper";
 import { connect } from "react-redux";
 import { addCartItem } from '../../redux/actions/cart';
@@ -47,8 +45,9 @@ class ProductPage extends React.Component {
     render() {
 
         const product = this.state.product;
+        console.log(product)
 
-        if (product)
+        if (product) 
             return (
                 <Wrapper>
                     <div className="wrapper">

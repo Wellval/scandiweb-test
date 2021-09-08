@@ -3,7 +3,7 @@ import { getEqualIndex } from "../../utils/groupItems";
 
 const initialState = {
     isOpen: false,
-    list: []
+    list: JSON.parse(localStorage.getItem('products')) || []
 };
 
 const reducer = (state = initialState, action) => {

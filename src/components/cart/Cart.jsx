@@ -16,12 +16,22 @@ class Cart extends React.Component {
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
+    componentDidUpdate() {
+        let products = [];
+        if(localStorage.getItem('products')){
+            products = JSON.parse(localStorage.getItem('products'));
+        }
+        products = this.props.cartItems;
+        localStorage.setItem('products', JSON.stringify(products));
+    }
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
     handleClickOutside(event) {
-        if (this.ref && !this.ref.current.contains(event.target) && this.props.isCartOpen === true) {
+        if (this.ref && !this.ref.current.contains(event.target)
+            && this.props.isCartOpen === true) {
             this.props.toggleCart()
         }
     }
@@ -38,7 +48,8 @@ class Cart extends React.Component {
     sumPrice() {
         let sum = 0;
         for (let product of this.props.cartItems) {
-            sum += product.prices.find(price => price.currency === this.props.selectedCurrency).amount;
+            sum += product.prices.find(price =>
+                price.currency === this.props.selectedCurrency).amount;
         }
 
         return sum;
@@ -47,8 +58,10 @@ class Cart extends React.Component {
     render() {
         return (
             <div className="cart-dd-wrapper" ref={this.ref}>
-                <div className={this.props.isCartOpen ? "cart-open" : "cart-image-circle-container"}>
-                    {this.numberCount() > 0 && <div className="products-number-circle">{this.numberCount()}</div>}
+                <div className={this.props.isCartOpen ?
+                    "cart-open" : "cart-image-circle-container"}>
+                    {this.numberCount() > 0 &&
+                        <div className="products-number-circle">{this.numberCount()}</div>}
                     <img alt="" className="cart" src="../../empty-cart.svg" onClick={() => {
                         this.props.toggleCart();
                     }}></img>
@@ -58,60 +71,71 @@ class Cart extends React.Component {
                     <div className="cart-wrapper">
                         <p className="cart-title"><b>My bag</b>, {this.stringCount()}</p>
                         {
-                            groupItems(this.props.cartItems).map((cartItem, index) => <div key={index} className="cart-popup-item">
-                                <div className="cart-popup-info">
-                                    <p>{cartItem.brand}</p>
-                                    <p>{cartItem.name}</p>
-                                    <p>{currenciesSymbols[this.props.selectedCurrency] || '$'}
-                                        <b>{cartItem.prices.find(price => price.currency === this.props.selectedCurrency).amount}</b></p>
-                                    <div className="cart-popup-attributes">
-                                        {
-                                            cartItem.attributes.map(attribute => <div class="cart-attributes-block" key={attribute.id}>
-                                                {attribute.items.map(attr => attr.value === "Yes"
-                                                    ? <div>{attribute.id}</div>
-                                                    : "")}
-                                                <div>
-                                                    {attribute.items.map(attr =>
-                                                        <button
-                                                            key={attribute.id + attr.value}
-                                                            className={cartItem.attrValues[attribute.id] === attr.value 
-                                                                ? 'attribute-text-active-cart' : 'attribute-button-cart'}
-                                                            style={{
-                                                                ...attribute.type === "swatch"
-                                                                    ? { backgroundColor: attr.value } : ""
-                                                            }}
-                                                            onClick={() => this.props.changeCartItemAttribute(cartItem, attribute.id, attr.value)}
-                                                        >{attribute.type === "swatch" ? "" : attr.value}</button>
+                            groupItems(JSON.parse(localStorage.getItem('products'))).map((cartItem, index) =>
+                                <div key={index} className="cart-popup-item">
+                                    <div className="cart-popup-info">
+                                        <p>{cartItem.brand}</p>
+                                        <p>{cartItem.name}</p>
+                                        <p>{currenciesSymbols[this.props.selectedCurrency] || '$'}
+                                            <b>{cartItem.prices.find(price =>
+                                                price.currency === this.props.selectedCurrency).amount}</b>
+                                        </p>
+                                        <div className="cart-popup-attributes">
+                                            {
+                                                cartItem.attributes.map(attribute =>
+                                                    <div class="cart-attributes-block" key={attribute.id}>
+                                                        {attribute.items.map(attr => attr.value === "Yes"
+                                                            ? <div>{attribute.id}</div>
+                                                            : "")}
+                                                        <div>
+                                                            {attribute.items.map(attr =>
+                                                                <button
+                                                                    key={attribute.id + attr.value}
+                                                                    className={cartItem.attrValues[attribute.id] === attr.value
+                                                                        ? 'attribute-text-active-cart'
+                                                                        : 'attribute-button-cart'}
+                                                                    style={{
+                                                                        ...attribute.type === "swatch"
+                                                                            ? { backgroundColor: attr.value } : ""
+                                                                    }}
+                                                                    onClick={() => this.props.changeCartItemAttribute(cartItem, attribute.id, attr.value)}
+                                                                >{attribute.type === "swatch" 
+                                                                ? "" 
+                                                                : attr.value}</button>
 
-                                                    )}
-                                                </div>
-                                            </div>)
-                                        }
+                                                            )}
+                                                        </div>
+                                                    </div>)
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="cart-popup-image">
-                                    <div className="cart-popup-amount">
-                                        <button className="cart-popup-button"
-                                            onClick={() => {
-                                                this.props.addCartItem({ ...cartItem, count: undefined });
+                                    <div className="cart-popup-image">
+                                        <div className="cart-popup-amount">
+                                            <button className="cart-popup-button"
+                                                onClick={() => {
+                                                    this.props.addCartItem({ ...cartItem, count: undefined });
+                                                }}>
+                                                +
+                                            </button>
+                                            <p>{cartItem.count || localStorage.getItem(cartItem.id)}</p>
+                                            {localStorage.setItem(cartItem.id, cartItem.count)}
+                                            <button className="cart-popup-button" onClick={() => {
+                                                this.props.removeCartItem(cartItem);
                                             }}>
-                                            +
-                                        </button>
-                                        <p>{cartItem.count}</p>
-                                        <button className="cart-popup-button" onClick={() => {
-                                            this.props.removeCartItem(cartItem);
-                                        }}>
-                                            -
-                                        </button>
-                                    </div>
-                                    <div className="img-wrapper">
-                                        <img alt="" src={cartItem.gallery[0]}></img>
+                                                -
+                                            </button>
+                                        </div>
+                                        <div className="img-wrapper">
+                                            <img alt="" src={cartItem.gallery[0]}></img>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             )
                         }
-                        <p className="cart-popup-total">Total: <b>{currenciesSymbols[this.props.selectedCurrency] || '$'}{this.sumPrice().toFixed(2)}</b></p>
+                        <p className="cart-popup-total">
+                            Total: <b>{currenciesSymbols[this.props.selectedCurrency]
+                                || '$'}{this.sumPrice().toFixed(2)}</b>
+                        </p>
                         <div className="cart-buttons">
                             <NavLink to={'/cart'}>
                                 <button onClick={() => { this.props.toggleCart() }}>view bag</button>
