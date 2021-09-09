@@ -71,7 +71,7 @@ class Cart extends React.Component {
                     <div className="cart-wrapper">
                         <p className="cart-title"><b>My bag</b>, {this.stringCount()}</p>
                         {
-                            groupItems(JSON.parse(localStorage.getItem('products'))).map((cartItem, index) =>
+                            groupItems(this.props.cartItems).map((cartItem, index) =>
                                 <div key={index} className="cart-popup-item">
                                     <div className="cart-popup-info">
                                         <p>{cartItem.brand}</p>
@@ -117,8 +117,7 @@ class Cart extends React.Component {
                                                 }}>
                                                 +
                                             </button>
-                                            <p>{cartItem.count || localStorage.getItem(cartItem.id)}</p>
-                                            {localStorage.setItem(cartItem.id, cartItem.count)}
+                                            <p>{cartItem.count}</p>
                                             <button className="cart-popup-button" onClick={() => {
                                                 this.props.removeCartItem(cartItem);
                                             }}>

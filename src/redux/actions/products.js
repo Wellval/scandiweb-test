@@ -78,4 +78,42 @@ export const requestProducts = (categoryName) => async dispatch => {
     }
 }
 
+export const requestProductById = (productId) => async dispatch => {
+    dispatch({ type: actionTypes.GET_PRODUCT_BY_ID_START });
+    try {
+        const result = await client.query({
+            query: gql`
+                query getProductById {
+                    product (id: "${productId}") {
+                            id
+                            name
+                            inStock
+                            gallery
+                            description
+                            category
+                            brand
+                            prices {
+                                amount
+                                currency
+                            }
+                            attributes {
+                                name
+                                id
+                                type
+                                items {
+                                    displayValue
+                                    value
+                                    id
+                                  }
+                            }
+                        }
+                }
+            `
+        });
+        dispatch({ type: actionTypes.GET_PRODUCT_BY_ID_SUCCESS, payload: result.data.product });
+    } catch (e) {
+        dispatch({ type: actionTypes.GET_PRODUCT_BY_ID_FAILED });
+    }
+}
+
 export const addProductAttribute = productAttribute => dispatch => dispatch({ type: actionTypes.ADD_PRODUCT_ATTRIBUTE, payload: productAttribute });
